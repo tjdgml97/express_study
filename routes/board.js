@@ -21,9 +21,19 @@ router.get('/',(req,res)=> {
 })
 
 // 글 쓰기 모드로 이동
-router.get('/write',(req,res) => {});
+router.get('/write',(req,res) => {
+  res.render('board_writer');
+});
 
 // 글 추가 
-router.post('/wirte',(req,res)=>{});
+router.post('/write',(req,res)=>{});
+
+// 글 수정 - 파라미터로 기존 내용 받음 
+router.get('/modify/:title', (req,res) => {});
+router.post('/modify/:title',(req,res) => {});
+
+//  글 삭제 
+router.delete('/delete:title',(req,res)=>{});
+
 
 module.exports = router;
