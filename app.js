@@ -9,6 +9,8 @@ app.use(cors()); // 서버에 필요한 패키지 넣어줌 (사용 설정 )
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 // public 을 static 폴더로 지정 (접근가능하게 )
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 const mainRouter = require('./routes/index.js')
 // const mainRouter = require('./routes') 생략도 가능 
@@ -19,6 +21,12 @@ const boardRouter = require('./routes/board');
 app.use('/', mainRouter);
 app.use('/users',userRouter);
 app.use('/board',boardRouter);
+
+app.use(( err,req,res,next )=> {
+  console.log(err.stack);
+  res.status(err.statusCode);
+  res.send(err.message);
+})
 
 
 

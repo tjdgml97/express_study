@@ -26,10 +26,34 @@ router.get('/write',(req,res) => {
 });
 
 // 글 추가 
-router.post('/write',(req,res)=>{});
+router.post('/write',(req,res)=>{
+  // if(Object.keys(req.body).length >= 1 )
+  if(req.body) {
+    if(req.body.title && req.body.content) {
+      const newPost = {
+        title : req.body.title,
+        content : req.body.content,
+      };
+      ARTICLE.push(newPost);
+      res.redirect('/board')
+    } else {
+      const err = new Error('폼 태그 입력');
+      err.status = 404;
+      throw err;
+    }
+  } else {
+    const err = new Error('데이터가 들어오지 않았음');
+    err.statusCode= 400;
+    throw err;
+  }
+});
 
 // 글 수정 - 파라미터로 기존 내용 받음 
-router.get('/modify/:title', (req,res) => {});
+router.get('/modify/:title', (req,res) => {
+  const arrIndex = ARTICLE.findIndex((article)=>{
+    req.params.title === article.title
+  })
+});
 router.post('/modify/:title',(req,res) => {});
 
 //  글 삭제 
