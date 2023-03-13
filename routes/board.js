@@ -51,13 +51,34 @@ router.post('/write',(req,res)=>{
 // 글 수정 - 파라미터로 기존 내용 받음 
 router.get('/modify/:title', (req,res) => {
   const arrIndex = ARTICLE.findIndex((article)=>{
-    req.params.title === article.title
-  })
+    return req.params.title === article.title
+  });
+  const selectedArticle = ARTICLE[arrIndex];
+  res.render('board_modify',{selectedArticle});
 });
-router.post('/modify/:title',(req,res) => {});
+
+
+router.post('/modify/:title',(req,res) => {
+  if(req.body.title && req.body.content) {
+    const arrIndex = ARTICLE.findIndex(
+      (article) => article.title === req.params.title 
+    );
+    ARTICLE[arrIndex].title = req.body.title;
+    ARTICLE[arrIndex].content = req.body.content;
+    res.redirect('/board');
+  } else {
+    const err = new Error('폼 입력 확인');
+    err.statusCode = 404;
+    throw err;
+  }
+});
 
 //  글 삭제 
-router.delete('/delete:title',(req,res)=>{});
+router.delete('/delete:title',(req,res)=>{
+  const arrIndex = ARTICLE.findIndex( (article)=>article.title === req.params.title );
+  ARTICLE.splice(arrIndex,1); //해당 인덱스만 삭제 
+  res.send('삭제 완료!');
+});
 
 
 module.exports = router;
