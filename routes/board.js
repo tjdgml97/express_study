@@ -13,4 +13,9 @@ const ARTICLE = [
   },
 ];
 
+// localhost:4000/board/
+router.get('/',(req,res)=> {
+  res.render('board',{ARTICLE , articleCounts: ARTICLE.length})
+  // ARTICLE : ARTICLE ( 키에 배열을 담는것 )
+})
 module.exports = router;
