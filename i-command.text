@@ -1,0 +1,2 @@
+npm install -D prettier eslint eslint-config-airbnb-base eslint-plugin-import
+npm i -S express cors ejs
