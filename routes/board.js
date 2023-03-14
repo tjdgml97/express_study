@@ -27,8 +27,9 @@ router.get('/write',(req,res) => {
 
 // 글 추가 
 router.post('/write',(req,res)=>{
+  // 이미 오류 안나도록 처리함 
   // if(Object.keys(req.body).length >= 1 )
-  if(req.body) {
+  // if(req.body) {
     if(req.body.title && req.body.content) {
       const newPost = {
         title : req.body.title,
@@ -36,11 +37,11 @@ router.post('/write',(req,res)=>{
       };
       ARTICLE.push(newPost);
       res.redirect('/board')
-    } else {
-      const err = new Error('폼 태그 입력');
-      err.status = 404;
-      throw err;
-    }
+    // } else {
+    //   const err = new Error('폼 태그 입력');
+    //   err.status = 404;
+    //   throw err;
+    // }
   } else {
     const err = new Error('데이터가 들어오지 않았음');
     err.statusCode= 400;
