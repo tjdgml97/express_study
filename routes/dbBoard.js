@@ -40,6 +40,10 @@ router.post('/write',(req,res)=> {
   console.log(req.body);
 });
 
+// 글 수정 모드로 이동
+router.get('/modify/:id' , (req,res) => {
+  res.render('db_board_modify');
+})
 router.get('/getAll',(req,res) => {
   // controller 사용해야함
   boardDB.getAllArticles((data)=>{
