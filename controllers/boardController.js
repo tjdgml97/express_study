@@ -8,6 +8,16 @@ const boardDB = {
       console.log(data);
       cb(data);
     })
+  },
+  writeArticle: (newArticle,cb) => {
+    connection.query(
+      `insert into mydb1.board (TITLE, CONTENT) values ('${newArticle.title}','${newArticle.content}');`,
+    (err,data) => {
+      if(err)throw err;
+      cb(data);
+
+    },
+    );
   }
 };
 
