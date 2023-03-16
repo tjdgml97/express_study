@@ -17,12 +17,14 @@ const mainRouter = require('./routes/index.js')
 const userRouter = require('./routes/users');
 const boardRouter = require('./routes/board');
 const dbRouter = require('./routes/db');
+const dbBoardRouter = require('./routes/dbBoard');
 
 // 이주소로 들어올 경우 - 처리할 라우터 설정  , 담당 지정  //연결 
 app.use('/', mainRouter);
 app.use('/users',userRouter);
 app.use('/board',boardRouter);
 app.use('/db', dbRouter);
+app.use('/dbBoard',dbBoardRouter);
 
 app.use(( err,req,res,next )=> {
   console.log(err.stack);
