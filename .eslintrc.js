@@ -4,5 +4,4 @@ module.exports = {
     'no-console': 'off',
   },
   node: true,
-  
 };

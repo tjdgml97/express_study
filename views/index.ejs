@@ -7,12 +7,19 @@
 
   <title>메인페이지</title>
   <!-- static으로 설정한 public 4000/public/ -->
-  <link rel="stylesheet" href="/css/style.css">
-  <script defer src="/js/main.js"></script>
+  <!-- <link rel="stylesheet" href="/css/style.css">
+  <script defer src="/js/main.js"></script> -->
 </head>
 <body>
-  <h1>메인 페이지 입니다</h1>
-  <p><%= msg%></p>
-  <img src="/images/puppy.jpg" alt="강아지">
+  <h1>Welcome to sh Service!</h1>
+  <h2><a href="/users">회원서비스</a></h2>
+  <h2><a href="/dbBoard">게시판 서비스 </a></h2>
+  <script>
+    // console.log(document.cookie);
+    // document.cookie = "user = sh ; expires=17 Mar 2023 13:00:00 GMT; path=/";
+    // document.cookie = "test = kdt ; expires=17 Mar 2023 13:00:00 GMT; path=/";
+
+    console.log(document.cookie);
+  </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 const express = require('express');   // express package 프레임 불러옴
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 const PORT = 4000;
@@ -11,6 +12,7 @@ app.use(express.static('public'));
 // public 을 static 폴더로 지정 (접근가능하게 )
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
 const mainRouter = require('./routes/index.js')
 // const mainRouter = require('./routes') 생략도 가능 
@@ -18,6 +20,7 @@ const userRouter = require('./routes/users');
 const boardRouter = require('./routes/board');
 const dbRouter = require('./routes/db');
 const dbBoardRouter = require('./routes/dbBoard');
+const cookieRouter = require('./routes/cookie');
 
 // 이주소로 들어올 경우 - 처리할 라우터 설정  , 담당 지정  //연결 
 app.use('/', mainRouter);
@@ -25,6 +28,7 @@ app.use('/users',userRouter);
 app.use('/board',boardRouter);
 app.use('/db', dbRouter);
 app.use('/dbBoard',dbBoardRouter);
+app.use('/cookie', cookieRouter);
 
 app.use(( err,req,res,next )=> {
   console.log(err.stack);

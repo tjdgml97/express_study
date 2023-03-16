@@ -6,7 +6,7 @@ const boardDB = {
   getAllArticles: (cb) => {
     connection.query('SELECT * from mydb1.board' , (err,data) => {
       if(err) throw err;
-      console.log(data);
+      // console.log(data);
       cb(data);
     })
   },
@@ -22,14 +22,34 @@ const boardDB = {
   },
   // 특정 Id 값을 가지는 게시글 찾기 
   getArticle : (id, cb) => {
-    connection.query(`SELECT * FROM mydb1.board WHERE ID_PK = ${id};`, (err,data) => {
-      if(err) throw err;
+    connection.query(`SELECT * FROM mydb1.board WHERE ID_PK = ${id};`, (err,data) => {      
+      if(err) throw err;      
       cb(data);
     },
     );
   
     // 숫자에는 '' 없어도 가능 
-  }
-};
+  },
+  modifyArticle: (id, modifyArticle, cb) => {
+    connection.query(
+      `UPDATE mydb1.board SET TITLE = '${modifyArticle.title}', CONTENT='${modifyArticle.content}' WHERE ID_PK = ${id};`,
+    (err,data) =>{
+      if(err)throw err;
+      cb(data);
+    },
+    );
+},
+
+// 특정 Id 를 가지는 게시글 삭제하기 
+deleteArticle : (id, cb) => {
+  connection.query(
+    `DELETE from mydb1.board where ID_PK='${id}'`,
+    (err,data) => {
+      if(err)throw err;
+      cb(data);
+    },
+  );
+}
+}; 
 
 module.exports = boardDB;
