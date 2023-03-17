@@ -22,11 +22,13 @@
             'Content-type' : 'application/json',
           }
         });
+        console.log(res);
+        const msg = await res.json();
       }
         // if(res) {
         //   location.href = '/cookie'
         // }
-    })
+    }) 
   </script>
 </body>
 </html>
