@@ -11,9 +11,18 @@ router.post('/', (req,res) => {
   userDB.userCheck(req.body.id, (data) => {
     if(data.length == 1){
       if(data[0].PASSWORD === req.body.password ){
+        // 백엔드 세션 생성
         req.session.login = true;
         req.session.userId = req.body.id;
-        res.status(200);
+
+        // 로그인 쿠키 발행
+        res.cookie('user', req.body.id, {
+          maxAge: 1000 * 10,
+          httpOnly: true,
+          signed: true,
+        });
+
+        // res.status(200);
         res.redirect('/dbBoard');
       } else {
         res.status(400); //사용자 error

@@ -10,9 +10,10 @@ const boardDB = {
       cb(data);
     })
   },
+  // 글쓰기
   writeArticle: (newArticle,cb) => {
     connection.query(
-      `insert into mydb1.board (TITLE, CONTENT) values ('${newArticle.title}','${newArticle.content}');`,
+      `insert into mydb1.board (USERID, TITLE, CONTENT) values ('${newArticle.userId}','${newArticle.title}','${newArticle.content}');`,
     (err,data) => {
       if(err)throw err;
       cb(data);

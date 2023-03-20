@@ -2,9 +2,11 @@ const express = require('express');   // express package 프레임 불러옴
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+require('dotenv').config();
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT;
+// const PORT = 4000;
 
 // 서버설정 
 app.use(cors()); // 서버에 필요한 패키지 넣어줌 (사용 설정 ) 
@@ -13,7 +15,6 @@ app.use(express.static('public'));
 // public 을 static 폴더로 지정 (접근가능하게 )
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(
   session({
   secret :  'tetz',
@@ -24,6 +25,7 @@ app.use(
   },
 })
 );
+app.use(cookieParser("tetz"));
 
 const mainRouter = require('./routes/index.js')
 // const mainRouter = require('./routes') 생략도 가능 
@@ -44,6 +46,7 @@ app.use('/dbBoard',dbBoardRouter);
 app.use('/cookie', cookieRouter);
 app.use('/register' ,registerRouter);
 app.use('/login',loginRouter);
+
 
 
 app.use(( err,req,res,next )=> {
