@@ -6,9 +6,9 @@ async function main() {
   try {
   await client.connect();
   const test = client.db('kdt5').collection('test');
-  const deleteManyResult = await test.deleteMany({});
+  await test.deleteMany({});
   // if(!deleteManyResult.acknowledged) return '삭제에러발생'; 
-  const insertOneResult = await test.insertOne( {name: 'pororo', age: 5});
+  await test.insertOne( {name: 'pororo', age: 5});
   if(!insertOneResult.acknowledged) return '데이터 삽입 에러 발생';
   console.log(insertOneResult);
 } catch (err) {
