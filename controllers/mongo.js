@@ -3,27 +3,41 @@ const uri = "mongodb+srv://tjdgml97:tjddms78!@cluster0.yomboil.mongodb.net/?retr
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function main() {
-  
+  try {
+  await client.connect();
+  const test = client.db('kdt5').collection('test');
+  const deleteManyResult = await test.deleteMany({});
+  // if(!deleteManyResult.acknowledged) return '삭제에러발생'; 
+  const insertOneResult = await test.insertOne( {name: 'pororo', age: 5});
+  if(!insertOneResult.acknowledged) return '데이터 삽입 에러 발생';
+  console.log(insertOneResult);
+} catch (err) {
+  console.error(err);
 }
 
-client.connect(err => {
-  const test = client.db('kdt5').collection('test');
+}
 
-  test.deleteMany({},(deleteErr, deleteResult) => {
-    if(deleteErr) throw deleteErr;
-    console.log(deleteResult);
+main();
 
-    test.insertOne({
-      name : 'pororo',
-      age: 5,
-    },
-    (insertErr, insertResult) => {
-      if(insertErr) throw insertErr;
-      console.log(insertResult);
-    },
-    );
-  })
-});
+// insertOne
+// client.connect(err => {
+//   const test = client.db('kdt5').collection('test');
+
+//   test.deleteMany({},(deleteErr, deleteResult) => {
+//     if(deleteErr) throw deleteErr;
+//     console.log(deleteResult);
+
+//     test.insertOne({
+//       name : 'pororo',
+//       age: 5,
+//     },
+//     (insertErr, insertResult) => {
+//       if(insertErr) throw insertErr;
+//       console.log(insertResult);
+//     },
+//     );
+//   })
+// });
 
 //insertMany
 
