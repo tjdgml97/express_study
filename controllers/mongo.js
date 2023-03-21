@@ -13,13 +13,14 @@ async function main() {
       {name: 'crong', age: 4},
       {name: 'loopy', age: 6},    
     ]);
-  if(!insertManyResult.acknowledged) return '데이터 삽입 에러 발생';
+  // if(!insertManyResult.acknowledged) return '데이터 삽입 에러 발생';
   
   const findCursor = test.find(
     {age : {$gte: 5}}
   );
   const dataArray  = await findCursor.toArray();
-  console.log(dataArray);
+  return dataArray;
+  // console.log(dataArray);
   // console.log(deleteManyResultSec);
 
   // const deleteManyResultSec = await test.deleteMany( 
@@ -27,8 +28,6 @@ async function main() {
   //     $age: {gte:5}
   //   }
   // );
-
-
   } catch (err) {
     console.error(err);
   }
