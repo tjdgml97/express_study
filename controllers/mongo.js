@@ -3,18 +3,35 @@ const uri = "mongodb+srv://tjdgml97:tjddms78!@cluster0.yomboil.mongodb.net/?retr
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
 async function main() {
+
   try {
   await client.connect();
   const test = client.db('kdt5').collection('test');
   await test.deleteMany({});
-  // if(!deleteManyResult.acknowledged) return '삭제에러발생'; 
-  await test.insertOne( {name: 'pororo', age: 5});
-  if(!insertOneResult.acknowledged) return '데이터 삽입 에러 발생';
-  console.log(insertOneResult);
-} catch (err) {
-  console.error(err);
-}
+  await test.insertMany([
+      {name: 'pororo', age: 5},
+      {name: 'crong', age: 4},
+      {name: 'loopy', age: 6},    
+    ]);
+  if(!insertManyResult.acknowledged) return '데이터 삽입 에러 발생';
+  
+  const findCursor = test.find(
+    {age : {$gte: 5}}
+  );
+  const dataArray  = await findCursor.toArray();
+  console.log(dataArray);
+  // console.log(deleteManyResultSec);
 
+  // const deleteManyResultSec = await test.deleteMany( 
+  //   {
+  //     $age: {gte:5}
+  //   }
+  // );
+
+
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 main();
