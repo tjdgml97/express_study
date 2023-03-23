@@ -29,10 +29,13 @@ const writeArticle = async(req,res)=>{
     const client = await mongoClient.connect();
     const board = client.db('kdt5').collection('board');
 
+    console.log(req.file);
+
     const newArticle = {
       USERID : req.session.userId,
       TITLE : req.body.title,
       CONTENT : req.body.content,
+      IMAGE : req.file ? req.file.filename: null,
     };
     await board.insertOne(newArticle) ;
     res.redirect('/dbBoard');
@@ -70,10 +73,11 @@ const modifyArticle  = async (req,res) => {
     // }
     
     board.updateOne(
-      {_id : req.session.userId},
+      {_id : ObjectId(req.params.id)},
       {$set: {
         TITLE : req.body.title,
-        CONTENT : req.body.content
+        CONTENT : req.body.content,
+        IMAGE : req.file ? req.file.filename: null,
       }}
     );
     res.redirect('/dbBoard');
@@ -82,11 +86,25 @@ const modifyArticle  = async (req,res) => {
     res.status(500).send(err.message + UNEXPECTED_MSG);
   }
 }
+
+const deleteArticle = async (req, res) => {
+  try{
+    const client = await mongoClient.connect();
+    const board = client.db('kdt5').collection('board');
+
+    await board.deleteOne({_id: ObjectId(req.params.id)});
+    res.status(200).json('삭제성공');
+
+  } catch(err){
+    console.error(err);
+  }
+}
 module.exports = {
   getAllArticles,
   writeArticle,
   getArticle,
-  modifyArticle
+  modifyArticle,
+  deleteArticle
 }
 
 // const { connect } = require('./dbConnect');

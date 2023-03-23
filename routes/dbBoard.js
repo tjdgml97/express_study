@@ -1,7 +1,38 @@
 const express = require('express');
-const { getAllArticles, writeArticle,getArticle,modifyArticle } = require('../controllers/boardController');
+
+const multer = require('multer');
+const fs = require('fs');
+
+const { 
+  getAllArticles, 
+  writeArticle,
+  getArticle,
+  modifyArticle,
+  deleteArticle } = require('../controllers/boardController');
 
 const router = express.Router();
+
+// 파일 업로드 설정
+const dir = './uploads';
+const storage = multer.diskStorage({
+  destination: (req,file, cb) => {
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+    // 파일 값 겹치지 않게 설정 
+    cb(null, file.fieldname + '_' + Date.now());
+
+  },
+});
+
+const limits = {
+  fileSize: 1024 * 1024 * 2,
+
+};
+const upload = multer({storage, limits});
+
+// 먼저 있는지 확인 -  없으면 생성
+if(!fs.existsSync(dir)) fs.mkdirSync(dir);
 
 // 로그인 확인용 미들웨어
 function isLogin(req, res, next) {
@@ -23,12 +54,15 @@ router.get('/write', (req, res) => {
 });
 
 // 글쓰기
-router.post('/write', isLogin , writeArticle);
+// 로그인 확인- 파일업로드  - 컨트롤러 코드를 호출 
+router.post('/write', isLogin , upload.single('img'), writeArticle);
 
 // 글 수정 모드로 이동
 router.get('/modify/:id', isLogin, getArticle );
 
-router.post('/modify/:id', isLogin, modifyArticle);
+router.post('/modify/:id', isLogin, upload.single('img'),modifyArticle);
+
+router.delete('/delete/:id', isLogin, deleteArticle);
 
 
 
