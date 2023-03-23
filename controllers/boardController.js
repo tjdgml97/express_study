@@ -72,13 +72,21 @@ const modifyArticle  = async (req,res) => {
     //   CONTENT : req.body.content,
     // }
     
+    // 글 수정만 
+    const modify = {
+      TITLE : req.body.title,
+      CONTENT : req.body.content,
+    };
+
+    // 이미지도 수정 
+    if(req.file) modify.IMAGE = req.file.filename;
+
+
     board.updateOne(
       {_id : ObjectId(req.params.id)},
-      {$set: {
-        TITLE : req.body.title,
-        CONTENT : req.body.content,
-        IMAGE : req.file ? req.file.filename: null,
-      }}
+      {$set: 
+        modify
+      }
     );
     res.redirect('/dbBoard');
   }catch (err) {
