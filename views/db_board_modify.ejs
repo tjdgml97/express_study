@@ -133,7 +133,7 @@
       <div class="board_header">
         <h1>Write Mode</h1>
       </div>
-      <form action="/dbBoard/modify/<%=selectedArticle._id%>" method="POST" class="board_form">
+      <form action="/dbBoard/modify/<%=selectedArticle._id%>" method="POST" class="board_form" enctype="multipart/form-data">
         <div class="form_title">
           <h3>제목</h3>
           <input type="text" name="title" value="<%= selectedArticle.TITLE %>" required />
@@ -144,13 +144,13 @@
           </textarea>
         </div>
         <div class="form-img">
-          <h3>이미지 업로드</h3>
+          <h3>이미지 수정</h3>
           <input type="file" name="img" />
         </div>
         <!-- 이미지 보여줌  -->
         <!-- 변수 넣을 때 = 넣어줘야함!  -->
         <div class="content">
-          <% if (selectedArticle.IMAGE !== null && selectedArticle.IMAGE !== undefined) { %>
+          <% if (selectedArticle.IMAGE !== null && selectedArticle.IMAGE !== undefined ) { %>
             <img src="/uploads/<%= selectedArticle.IMAGE %>" width="500" />
           <% } %>
         </div>
